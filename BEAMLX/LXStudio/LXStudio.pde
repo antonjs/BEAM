@@ -35,8 +35,8 @@ void initialize(final heronarts.lx.studio.LXStudio lx, heronarts.lx.studio.LXStu
   final double MAX_BRIGHTNESS = 0.1;
   final int LEDS_PER_SIDE = 100;
   final String[] ARTNET_IPS = {
-    "10.0.0.146",
-    "10.0.0.76"
+    "10.0.0.146"
+    //"10.0.0.76"
   };
  
   try {
@@ -71,9 +71,6 @@ void initialize(final heronarts.lx.studio.LXStudio lx, heronarts.lx.studio.LXStu
 }
 
 void onUIReady(heronarts.lx.studio.LXStudio lx, heronarts.lx.studio.LXStudio.UI ui) {
-  // Add custom UI components here
-  ui.preview.setRadius(80*FEET).setPhi(-PI/18).setTheta(PI/12);
-  ui.preview.setCenter(lx.model.cx, lx.model.cy - 2*FEET, lx.model.cz);
 }
 
 void draw() {

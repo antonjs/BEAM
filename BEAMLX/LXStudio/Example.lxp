@@ -1,6 +1,6 @@
 {
   "version": "0.1",
-  "timestamp": 1534056169592,
+  "timestamp": 1534101523787,
   "engine": {
     "id": 1,
     "class": "heronarts.lx.LXEngine",
@@ -62,7 +62,7 @@
         },
         "effects": [],
         "clips": [],
-        "patternIndex": 0,
+        "patternIndex": 4,
         "patterns": [
           {
             "id": 137,
@@ -87,9 +87,62 @@
             "modulationColor": -16745473,
             "parameters": {
               "label": "Sparkle",
-              "frequency": 0.0,
-              "radius": 0.4000000059604645,
-              "lifetime": 100.0
+              "frequency": 1800.0001274049282,
+              "variance": 0.0,
+              "radius": 0.8399999812245369,
+              "lifetime": 10000.0,
+              "lifetimevar": 0.0
+            },
+            "modulation": {
+              "modulators": [],
+              "modulations": [],
+              "triggers": []
+            },
+            "autoCycleEnabled": true
+          },
+          {
+            "id": 189,
+            "class": "LXStudio$NoisePattern",
+            "modulationColor": -3277056,
+            "parameters": {
+              "label": "Noise",
+              "min": 0.0,
+              "max": 100.0,
+              "speed": 540.0000102818012
+            },
+            "modulation": {
+              "modulators": [],
+              "modulations": [],
+              "triggers": []
+            },
+            "autoCycleEnabled": true
+          },
+          {
+            "id": 216,
+            "class": "LXStudio$RainPattern",
+            "modulationColor": -6815489,
+            "parameters": {
+              "label": "Rain",
+              "birthrate": 0.42999999038875103,
+              "velocity": 0.40000010281801224,
+              "tailLength": 7.579999830573797,
+              "forward": true,
+              "sync": true
+            },
+            "modulation": {
+              "modulators": [],
+              "modulations": [],
+              "triggers": []
+            },
+            "autoCycleEnabled": true
+          },
+          {
+            "id": 249,
+            "class": "LXStudio$BlockPattern",
+            "modulationColor": -16760321,
+            "parameters": {
+              "label": "Block",
+              "fragments": 2
             },
             "modulation": {
               "modulators": [],
@@ -273,13 +326,13 @@
           "Band-2": 0.0,
           "Band-3": 0.0,
           "Band-4": 0.0,
-          "Band-5": 0.0,
+          "Band-5": 0.010673286202632859,
           "Band-6": 0.0,
           "Band-7": 0.0,
           "Band-8": 0.0,
           "Band-9": 0.0,
           "Band-10": 0.0,
-          "Band-11": 0.0,
+          "Band-11": 0.0903704009482732,
           "Band-12": 0.0,
           "Band-13": 0.0,
           "Band-14": 0.0,
@@ -346,7 +399,7 @@
             "phase": 0.0,
             "exp": 0.0
           },
-          "basis": 0.42353456392657873
+          "basis": 0.9702378606297004
         },
         {
           "id": 134,
@@ -362,7 +415,7 @@
             "tempoLock": true,
             "period": 4564.182049948659
           },
-          "basis": 0.41614884773763255,
+          "basis": 0.2078620540435613,
           "stages": [
             {
               "basis": 0.0,
@@ -415,7 +468,7 @@
     "ui": {
       "audioExpanded": true,
       "paletteExpanded": false,
-      "cameraExpanded": false,
+      "cameraExpanded": true,
       "clipViewVisible": false,
       "modulatorExpanded": {
         "133": true,
@@ -432,22 +485,22 @@
         "centerPoint": false,
         "camera": {
           "active": false,
-          "radius": 103.46761370116943,
-          "theta": -0.011999999999999712,
-          "phi": 0.2699999999999986,
-          "x": 27.41711950302124,
-          "y": 54.5,
-          "z": 7.77465295791626
+          "radius": 10.067110934799615,
+          "theta": -0.03299999999999967,
+          "phi": 0.2309999999999986,
+          "x": 1.4189915657043457,
+          "y": -1.5,
+          "z": 8.086645481176674
         },
         "cue": [
           {
-            "active": false,
-            "radius": 103.46761370116943,
-            "theta": -0.011999999999999712,
-            "phi": 0.2699999999999986,
-            "x": 27.41711950302124,
-            "y": 54.5,
-            "z": 7.77465295791626
+            "active": true,
+            "radius": 10.067110934799615,
+            "theta": -0.03299999999999967,
+            "phi": 0.2309999999999986,
+            "x": 1.4189915657043457,
+            "y": -1.5,
+            "z": 8.086645481176674
           },
           {
             "active": false,
