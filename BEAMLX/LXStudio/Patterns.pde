@@ -51,38 +51,32 @@ public static class SparklePattern extends LXPattern {
     X, Y, Z
   };
 
-  public final CompoundParameter frequency = new CompoundParameter("Frequency", 5000, 0, 10000)
-    .setDescription("How often to create a new sparkle");
-    
-  public final CompoundParameter variance = new CompoundParameter("Variance", 0, 0, 10000)
-    .setDescription("How much to vary creation frequency"); 
+  public final CompoundParameter density = new CompoundParameter("Density", 0.2f, 0, 1)
+    .setDescription("How dense should we make the sparkles?");
   
-  public final CompoundParameter radius = new CompoundParameter("Radius", 0.01, 0, 1)
+  public final CompoundParameter radius = new CompoundParameter("Radius", 0.01f, 0, 1)
     .setDescription("Sparkle radius");
     
-  public final CompoundParameter lifetime = new CompoundParameter("Lifetime", 1000, 0, 10000)
+  public final CompoundParameter lifetime = new CompoundParameter("Lifetime", 100, 0, 1000)
     .setDescription("Sparkle lifetime");
     
-  public final CompoundParameter lifetimeVariance = new CompoundParameter("LifeVar", 0.5, 0, 1)
+  public final CompoundParameter lifetimeVariance = new CompoundParameter("LifeVar", 0.5f, 0, 1)
     .setDescription("Sparkle lifetime variance");
   
   private final List<SparkleLayer> sparkles = new ArrayList<SparkleLayer>();
   
-  private long lastSparkle = 0;
   private Random rand = new Random();
   
   public SparklePattern(LX lx) {
     super(lx);
-    addParameter("frequency", this.frequency);
-    addParameter("variance", this.variance);
+    addParameter("density", this.density);
     addParameter("radius", this.radius);
     addParameter("lifetime", this.lifetime);
     addParameter("lifetimevar", this.lifetimeVariance);
   }
   
-  void newSparkle() {
-    double life = lifetime.getValue() + ((Math.random() - 0.5) * lifetimeVariance.getValue() * lifetime.getValue());
-    System.out.println(life);
+  public void newSparkle() {
+    double life = lifetime.getValue() + ((Math.random() - 0.5f) * lifetimeVariance.getValue() * lifetime.getValue());
  
     LXPoint target = lx.model.points[rand.nextInt(lx.model.points.length)];
     
@@ -90,11 +84,6 @@ public static class SparklePattern extends LXPattern {
     
     addLayer(sparkle);
     sparkles.add(sparkle);
-  }
-  
-  void removeSparkle(SparkleLayer sparkle) {
-    removeLayer(sparkle);
-    sparkles.remove(sparkle);
   }
   
   private class SparkleLayer extends LXLayer {    
@@ -136,15 +125,22 @@ public static class SparklePattern extends LXPattern {
   }
   
   public void run(double deltaMs) {
-    lastSparkle += deltaMs;
-    if (lastSparkle > frequency.getValue() + (Math.random() - 0.5) * variance.getValue()) {
-      // New sparkle time!
-      newSparkle();
-      lastSparkle = 0;
+    double currentDensity = 1.0f * sparkles.size() / colors.length;
+    while (currentDensity < density.getValue()) {
+      if (rand.nextDouble() < 1 - currentDensity) {
+        // New sparkle time!
+        newSparkle();
+      }
+      
+      currentDensity = 1.0f * sparkles.size() / colors.length;
     }
     
-    for (SparkleLayer sparkle : sparkles) {
-      if (sparkle.isFinished()) removeLayer(sparkle);
+    for (Iterator<SparkleLayer> i = sparkles.iterator(); i.hasNext(); ) {
+      SparkleLayer sparkle = i.next();
+      if (sparkle.isFinished()) {
+        removeLayer(sparkle);
+        i.remove();
+      }
     }
   }
 }
@@ -179,13 +175,13 @@ public static class NoisePattern extends LXPattern {
     startModulator(animationModulator);
   }
   
-  void fillFrame(int index) {
+  public void fillFrame(int index) {
     for (int i = 0; i < frames[index].length; i++) {
       frames[index][i] = rand.nextDouble() * (max.getValue() - min.getValue()) + min.getValue();
     }
   }
   
-  void showFrame(int thisFrame, int nextFrame, double mix) {
+  public void showFrame(int thisFrame, int nextFrame, double mix) {
     for (int i = 0; i < colors.length; i++) {
       double start = frames[thisFrame][i];
       double end = frames[nextFrame][i];
@@ -208,13 +204,13 @@ public static class NoisePattern extends LXPattern {
 }
 
 public static class RainPattern extends LXPattern {
-  private final double DROP_RADIUS = 0.1;
+  private final double DROP_RADIUS = 0.1f;
   private final LXVector DIRECTION = new LXVector(0, -1, 0);
   
   public final CompoundParameter birthrate = new CompoundParameter("Birthrate", 1, 0, 5)
     .setDescription("Rate of creation of drops (/ s)");
     
-  public final CompoundParameter velocity = new CompoundParameter("Velocity", 0.2, 0, 1)
+  public final CompoundParameter velocity = new CompoundParameter("Velocity", 0.2f, 0, 1)
     .setDescription("Velocity (unit / s)");
     
   public final CompoundParameter tailLength = new CompoundParameter("Length", 5, 0, 50)
@@ -309,6 +305,69 @@ public static class RainPattern extends LXPattern {
     
     public boolean finished() { 
       return !position.isRunning();
+    }
+  }
+}
+
+public static class BlockPattern extends LXPattern {
+  public final DiscreteParameter fragments = new DiscreteParameter("Fragments", 2, 0, 8)
+    .setDescription("Number of fragments");
+    
+  public final BooleanParameter invert = new BooleanParameter("Invert", false)
+    .setDescription("Invert colors");
+    
+  public final BooleanParameter beamSync = new BooleanParameter("BeamSync", true)
+    .setDescription("Sync alignment beam-to-beam");
+    
+  public final BooleanParameter sideSync = new BooleanParameter("SideSync", true)
+    .setDescription("Sync alignment side-to-side");
+    
+  private final boolean[] seeds = new boolean[((GridModel3D)lx.model).NUM_BEAMS * 2];
+  private final Random rand = new Random();
+  
+  public BlockPattern(LX lx) {
+    super(lx);
+    addParameter("fragments", this.fragments);
+    addParameter("invert", this.invert);
+    addParameter("beamSync", this.beamSync);
+    addParameter("sideSync", this.sideSync);
+    
+    LXParameterListener listener = new LXParameterListener() {
+      public @Override
+      void onParameterChanged(LXParameter param) {
+        reseed();
+      }
+    };
+    
+    this.beamSync.addListener(listener);
+    this.sideSync.addListener(listener);
+    
+    reseed();
+  }
+  
+  public void reseed() {
+    for (int i = 0; i < seeds.length; i ++) {
+      if (i % 2 == 0) {
+        seeds[i] = beamSync.isOn() ? true : (i / 2 % 2) == 0;
+      } else {
+        seeds[i] = sideSync.isOn() ? seeds[i - 1] : !seeds[i-1];
+      }
+    }
+  }
+
+  public void run(double deltaMs) {
+    List<Fixture> beams = ((GridModel3D)lx.model).beams;
+    int beamIndex = 0;
+    
+    for (Fixture beam : beams) {    
+      for (List<LXPoint> strip : beam.sides) {
+        int fragSize = (int)(strip.size() / fragments.getValue());
+        boolean white = seeds[beamIndex++];
+        for (int i = 0; i < strip.size(); i++) {
+          colors[strip.get(i).index] = white ^ invert.isOn() ? LXColor.WHITE : LXColor.BLACK;
+          if ((i+1) % fragSize == 0) white = !white;
+        }
+      }
     }
   }
 }
