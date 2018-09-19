@@ -371,3 +371,216 @@ public static class BlockPattern extends LXPattern {
     }
   }
 }
+
+
+public static class BarPattern extends LXPattern {
+  public final BooleanParameter trigger = new BooleanParameter("trigger", true)
+    .setDescription("trigger next");
+  
+  public final CompoundParameter speed = new CompoundParameter("Speed", 500, 0, 1000)
+    .setDescription("Speed (time between frames)");
+    
+  private final boolean[] seeds = new boolean[((GridModel3D)lx.model).NUM_BEAMS * 2];
+  private final Random rand = new Random();
+  
+  
+  private int barInt = 0;
+  
+  public BarPattern(LX lx) {
+    super(lx);
+    addParameter("trigger", this.trigger);
+    
+    LXParameterListener listener = new LXParameterListener() {
+      public @Override
+      void onParameterChanged(LXParameter param) {
+        step();
+      }
+    };
+    
+    this.trigger.addListener(listener);
+    
+    step();
+  }
+  
+  public void step() {
+    barInt++;
+    barInt = barInt > ((GridModel3D)lx.model).NUM_BEAMS - 1 ? 0 : barInt;
+    System.out.println(barInt);
+  }
+
+  public void run(double deltaMs) {
+    List<Fixture> beams = ((GridModel3D)lx.model).beams;
+    int beamIndex = 0;
+    
+    for (Fixture beam : beams) {    
+      if (beamIndex++ == barInt) {
+        for (List<LXPoint> strip : beam.sides) {
+          for (int i = 0; i < strip.size(); i++) {
+            colors[strip.get(i).index] = LXColor.gray(100);
+          }
+        }
+      }
+      else {
+        for (List<LXPoint> strip : beam.sides) {
+          for (int i = 0; i < strip.size(); i++) {
+            colors[strip.get(i).index] = LXColor.gray(0);
+          }
+        }
+      }
+    }
+  }
+}
+
+public static class BarChainPattern extends LXPattern {
+  public final BooleanParameter trigger = new BooleanParameter("trigger", true)
+    .setDescription("trigger next");
+  
+  public final BooleanParameter dual = new BooleanParameter("dual", true)
+    .setDescription("dual");
+  
+  public final CompoundParameter speed = new CompoundParameter("Speed", 50, 30, 600)
+    .setDescription("Speed (time between frames)");
+  
+  private final LXPeriodicModulator animationModulator = new LinearEnvelope(0, ((GridModel3D)lx.model).NUM_BEAMS, speed);
+  
+  private int barInt = 0;
+  
+  private boolean chain = false;
+  private boolean mirror = true;
+  
+  public BarChainPattern(LX lx) {
+    super(lx);
+    addParameter("trigger", this.trigger);
+    addParameter("dual", this.dual);
+    addParameter("speed", this.speed);
+    
+    LXParameterListener listener = new LXParameterListener() {
+      public @Override
+      void onParameterChanged(LXParameter param) {
+        step();
+      }
+    };
+    
+    LXParameterListener duallistener = new LXParameterListener() {
+      public @Override
+      void onParameterChanged(LXParameter param) {
+        mirror = !mirror;
+      }
+    };
+    
+    this.trigger.addListener(listener);
+    this.dual.addListener(duallistener);
+        
+    animationModulator.setLooping(true);
+    startModulator(animationModulator);
+    
+    step();
+  }
+  
+  public void step() {
+    chain = true;
+    barInt = -1;
+  }
+
+  public void run(double deltaMs) {
+    List<Fixture> beams = ((GridModel3D)lx.model).beams;
+    int beamIndex = 0;
+    
+    if (animationModulator.loop()) {  
+      barInt++;
+      if (barInt >= ((GridModel3D)lx.model).NUM_BEAMS) {
+        chain = false;
+        for (Fixture beam : beams) {
+          for (List<LXPoint> strip : beam.sides) {
+            for (int i = 0; i < strip.size(); i++) {
+              colors[strip.get(i).index] = LXColor.gray(0);
+            }
+          }
+        }
+      }
+    } else {
+      if (chain == true) {
+        for (Fixture beam : beams) {    
+          if (beamIndex++ == barInt) {
+            for (List<LXPoint> strip : beam.sides) {
+              for (int i = 0; i < strip.size(); i++) {
+                colors[strip.get(i).index] = LXColor.gray(100);
+              }
+            }
+          } else if (mirror && beamIndex == ((GridModel3D)lx.model).NUM_BEAMS - barInt) {
+              for (List<LXPoint> strip : beam.sides) {
+                for (int i = 0; i < strip.size(); i++) {
+                  colors[strip.get(i).index] = LXColor.gray(100);
+                }
+              }
+            } else {
+            for (List<LXPoint> strip : beam.sides) {
+              for (int i = 0; i < strip.size(); i++) {
+                colors[strip.get(i).index] = LXColor.gray(0);
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+public static class BarRandPattern extends LXPattern {
+  
+  public final CompoundParameter speed = new CompoundParameter("Speed", 50, 30, 600)
+    .setDescription("Speed (time between frames)");
+    
+  public final CompoundParameter rate = new CompoundParameter("Rate", 50, 0, 100)
+    .setDescription("Rate");
+  
+  private final LXPeriodicModulator animationModulator = new LinearEnvelope(0, ((GridModel3D)lx.model).NUM_BEAMS, speed);
+  
+  private final Random rand = new Random();
+  
+  private int barInt = 0;
+  
+  private boolean chain = false;
+  private boolean mirror = true;
+  
+  public BarRandPattern(LX lx) {
+    super(lx);
+    addParameter("speed", this.speed);
+    addParameter("rate", this.rate);
+        
+    animationModulator.setLooping(true);
+    startModulator(animationModulator);
+    
+    step();
+  }
+  
+  public void step() {
+    chain = true;
+    barInt = -1;
+  }
+
+  public void run(double deltaMs) {
+    List<Fixture> beams = ((GridModel3D)lx.model).beams;
+    
+    if (animationModulator.loop()) {  
+      for (Fixture beam : beams) {    
+        double barShow = 100*rand.nextDouble();
+        System.out.println(barShow);
+        System.out.println(rate.getValue());
+        if (barShow < rate.getValue()) {
+          for (List<LXPoint> strip : beam.sides) {
+            for (int i = 0; i < strip.size(); i++) {
+              colors[strip.get(i).index] = LXColor.gray(100);
+            }
+          }
+        } else {
+          for (List<LXPoint> strip : beam.sides) {
+            for (int i = 0; i < strip.size(); i++) {
+              colors[strip.get(i).index] = LXColor.gray(0);
+            }
+          }
+        }
+      }
+    }
+  }
+}
