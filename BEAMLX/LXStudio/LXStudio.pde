@@ -31,11 +31,21 @@ void setup() {
   lx.ui.setResizable(RESIZABLE);
 }
 
+int[] getIndices(List<LXPoint> points) {
+  int[] indices = new int[points.size()];
+  for (int i = 0; i < points.size(); i++) {
+    indices[i] = points.get(i).index;
+  }
+  
+  return indices;
+}
+
 void initialize(final heronarts.lx.studio.LXStudio lx, heronarts.lx.studio.LXStudio.UI ui) {
-  final double MAX_BRIGHTNESS = 0.1;
+  final double MAX_BRIGHTNESS = 0.5;
   final int LEDS_PER_SIDE = 100;
   final String[] ARTNET_IPS = {
-    "10.0.0.146"
+    "192.168.0.106"
+    //"10.0.0.146"
     //"10.0.0.76"
   };
  
@@ -46,20 +56,18 @@ void initialize(final heronarts.lx.studio.LXStudio lx, heronarts.lx.studio.LXStu
     for (int i = 0; i < ARTNET_IPS.length; i++) {
       //// Get our beam
       Fixture beam = ((GridModel3D)lx.model).beams.get(i);
-      List<LXPoint> points = beam.getPoints();
-      int[] pointIndices = new int[points.size()];
-      
-      System.out.println(ARTNET_IPS[i] + ": " + Integer.toString(i) + " has " + Integer.toString(points.size()) + " points");
-      
-      for (int j = 0; j < points.size(); j++) {
-        pointIndices[j] = points.get(j).index;
-      }
       
       // Add an ArtNetDatagram which sends all of the points in our model
-      ArtNetDatagram datagram = new ArtNetDatagram(((GridModel3D)lx.model).beams.get(i), 0);
-      datagram.setAddress(ARTNET_IPS[i]);
-      datagram.setByteOrder(LXDatagram.ByteOrder.GRB);  
-      output.addDatagram(datagram);
+      ArtNetDatagram frontDatagram = new ArtNetDatagram(getIndices(beam.front), 0);
+      frontDatagram.setAddress(ARTNET_IPS[i]);
+      frontDatagram.setByteOrder(LXDatagram.ByteOrder.GRB);  
+      output.addDatagram(frontDatagram);
+      
+      ArtNetDatagram backDatagram = new ArtNetDatagram(getIndices(beam.back), 4);
+      backDatagram.setAddress(ARTNET_IPS[i]);
+      backDatagram.setByteOrder(LXDatagram.ByteOrder.GRB);  
+      output.addDatagram(backDatagram);
+      
       output.brightness.setNormalized(MAX_BRIGHTNESS);
     }
     
