@@ -25,7 +25,7 @@ public static class GridModel3D extends LXModel {
 }
 
 public static class Fixture extends LXAbstractFixture {
-  public final static int SIZE = 50;
+  public final static int SIZE = 100;
   
   public final static float LED_SPACING = 0.016f;
   public final static float SIDE_SPACING = LED_SPACING * 10; // Space between front and back columns
