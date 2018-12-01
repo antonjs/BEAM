@@ -44,7 +44,7 @@ void initialize(final heronarts.lx.studio.LXStudio lx, heronarts.lx.studio.LXStu
   final double MAX_BRIGHTNESS = 0.5;
   final int LEDS_PER_SIDE = 100;
   final String[] ARTNET_IPS = {
-    "192.168.0.106"
+    "127.0.0.1"
     //"10.0.0.146"
     //"10.0.0.76"
   };
