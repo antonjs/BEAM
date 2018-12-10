@@ -207,10 +207,10 @@
 <text x="22.606" y="16.129" size="0.889" layer="22" font="vector" ratio="15" rot="MR0">D3</text>
 <text x="22.606" y="11.049" size="0.8128" layer="22" font="vector" ratio="15" rot="MR0">GND</text>
 <text x="22.606" y="8.509" size="0.8128" layer="22" font="vector" ratio="15" rot="MR0">5V</text>
-<text x="8.382" y="1.524" size="1.016" layer="21" font="vector" ratio="12" rot="R270" align="bottom-right">(C)2016 SuperHouse Pty Ltd</text>
-<text x="12.7" y="29.21" size="1.016" layer="21" font="vector" ratio="18" distance="40" align="bottom-center">D1 Mini
+<text x="-21.336" y="2.54" size="1.016" layer="21" font="vector" ratio="12" rot="R270" align="bottom-right">(C)2016 SuperHouse Pty Ltd</text>
+<text x="-13.462" y="27.94" size="1.016" layer="21" font="vector" ratio="18" distance="40" align="bottom-center">D1 Mini
 Shield Outline</text>
-<text x="9.906" y="28.194" size="0.8128" layer="21" font="vector" ratio="18">by Jon Oxer</text>
+<text x="-14.224" y="25.654" size="0.8128" layer="21" font="vector" ratio="18">by Jon Oxer</text>
 <wire x1="0" y1="27.94" x2="2.54" y2="27.94" width="0.254" layer="22"/>
 <wire x1="2.54" y1="27.94" x2="2.54" y2="7.62" width="0.254" layer="22"/>
 <wire x1="2.54" y1="7.62" x2="0" y2="7.62" width="0.254" layer="22"/>
@@ -219,6 +219,8 @@ Shield Outline</text>
 <wire x1="25.4" y1="27.94" x2="25.4" y2="7.62" width="0.254" layer="22"/>
 <wire x1="25.4" y1="7.62" x2="22.86" y2="7.62" width="0.254" layer="22"/>
 <wire x1="22.86" y1="7.62" x2="22.86" y2="27.94" width="0.254" layer="22"/>
+<text x="0.762" y="30.48" size="1.778" layer="21" font="fixed">BEAM</text>
+<text x="1.016" y="29.464" size="0.6096" layer="21" font="fixed">v1.20181201</text>
 </plain>
 <libraries>
 <library name="freetronics-original">
@@ -1402,28 +1404,6 @@ type 0207, grid 10 mm</description>
 <rectangle x1="3.175" y1="-0.3048" x2="4.0386" y2="0.3048" layer="21"/>
 <rectangle x1="-4.0386" y1="-0.3048" x2="-3.175" y2="0.3048" layer="21"/>
 </package>
-<package name="C150-091X182" urn="urn:adsk.eagle:footprint:25749/1" library_version="1">
-<description>&lt;b&gt;CAPACITOR&lt;/b&gt;&lt;p&gt;
-grid 15 mm, outline 9.1 x 18.2 mm</description>
-<wire x1="-5.08" y1="1.27" x2="-5.08" y2="0" width="0.4064" layer="21"/>
-<wire x1="-5.08" y1="0" x2="-5.08" y2="-1.27" width="0.4064" layer="21"/>
-<wire x1="-4.191" y1="1.27" x2="-4.191" y2="0" width="0.4064" layer="21"/>
-<wire x1="-4.191" y1="0" x2="-4.191" y2="-1.27" width="0.4064" layer="21"/>
-<wire x1="-4.191" y1="0" x2="6.096" y2="0" width="0.1524" layer="21"/>
-<wire x1="-5.08" y1="0" x2="-6.096" y2="0" width="0.1524" layer="21"/>
-<wire x1="9.017" y1="3.937" x2="9.017" y2="-3.937" width="0.1524" layer="21"/>
-<wire x1="8.509" y1="-4.445" x2="-8.509" y2="-4.445" width="0.1524" layer="21"/>
-<wire x1="-9.017" y1="-3.937" x2="-9.017" y2="3.937" width="0.1524" layer="21"/>
-<wire x1="-8.509" y1="4.445" x2="8.509" y2="4.445" width="0.1524" layer="21"/>
-<wire x1="8.509" y1="4.445" x2="9.017" y2="3.937" width="0.1524" layer="21" curve="-90"/>
-<wire x1="8.509" y1="-4.445" x2="9.017" y2="-3.937" width="0.1524" layer="21" curve="90"/>
-<wire x1="-9.017" y1="-3.937" x2="-8.509" y2="-4.445" width="0.1524" layer="21" curve="90"/>
-<wire x1="-9.017" y1="3.937" x2="-8.509" y2="4.445" width="0.1524" layer="21" curve="-90"/>
-<pad name="1" x="-7.493" y="0" drill="1.016" shape="octagon"/>
-<pad name="2" x="7.493" y="0" drill="1.016" shape="octagon"/>
-<text x="-8.509" y="4.826" size="1.27" layer="25" ratio="10">&gt;NAME</text>
-<text x="-3.429" y="-2.54" size="1.27" layer="27" ratio="10">&gt;VALUE</text>
-</package>
 </packages>
 <packages3d>
 <package3d name="0207/10" urn="urn:adsk.eagle:package:25939/1" type="box" library_version="1">
@@ -1431,13 +1411,6 @@ grid 15 mm, outline 9.1 x 18.2 mm</description>
 type 0207, grid 10 mm</description>
 <packageinstances>
 <packageinstance name="0207/10"/>
-</packageinstances>
-</package3d>
-<package3d name="C150-091X182" urn="urn:adsk.eagle:package:26177/1" type="box" library_version="1">
-<description>CAPACITOR
-grid 15 mm, outline 9.1 x 18.2 mm</description>
-<packageinstances>
-<packageinstance name="C150-091X182"/>
 </packageinstances>
 </package3d>
 </packages3d>
@@ -1547,6 +1520,42 @@ CONN_02
 </description>
 <packageinstances>
 <packageinstance name="SCREWTERMINAL-5MM-2"/>
+</packageinstances>
+</package3d>
+</packages3d>
+</library>
+<library name="SparkFun-Capacitors" urn="urn:adsk.eagle:library:510">
+<description>&lt;h3&gt;SparkFun Capacitors&lt;/h3&gt;
+This library contains capacitors. 
+&lt;br&gt;
+&lt;br&gt;
+We've spent an enormous amount of time creating and checking these footprints and parts, but it is &lt;b&gt; the end user's responsibility&lt;/b&gt; to ensure correctness and suitablity for a given componet or application. 
+&lt;br&gt;
+&lt;br&gt;If you enjoy using this library, please buy one of our products at &lt;a href=" www.sparkfun.com"&gt;SparkFun.com&lt;/a&gt;.
+&lt;br&gt;
+&lt;br&gt;
+&lt;b&gt;Licensing:&lt;/b&gt; Creative Commons ShareAlike 4.0 International - https://creativecommons.org/licenses/by-sa/4.0/ 
+&lt;br&gt;
+&lt;br&gt;
+You are welcome to use this library for commercial purposes. For attribution, we ask that when you begin to sell your device using our footprint, you email us with a link to the product being sold. We want bragging rights that we helped (in a very small part) to create your 8th world wonder. We would like the opportunity to feature your device on our homepage.</description>
+<packages>
+<package name="CPOL-RADIAL-5MM-10MM" urn="urn:adsk.eagle:footprint:37387/1" library_version="1">
+<description>5 mm spaced PTHs in 10 mm diameter silk ring</description>
+<wire x1="-1.905" y1="2.54" x2="-3.175" y2="2.54" width="0.2032" layer="21"/>
+<wire x1="3.175" y1="2.54" x2="1.905" y2="2.54" width="0.2032" layer="21"/>
+<wire x1="2.54" y1="3.175" x2="2.54" y2="1.905" width="0.2032" layer="21"/>
+<circle x="0" y="0" radius="5" width="0.2032" layer="21"/>
+<pad name="-" x="-2.5" y="0" drill="0.9" diameter="1.9304"/>
+<pad name="+" x="2.5" y="0" drill="0.9" diameter="1.9304" shape="square"/>
+<text x="0" y="-5.207" size="0.6096" layer="27" font="vector" ratio="20" align="top-center">&gt;Value</text>
+<text x="0" y="5.207" size="0.6096" layer="25" font="vector" ratio="20" align="bottom-center">&gt;Name</text>
+</package>
+</packages>
+<packages3d>
+<package3d name="CPOL-RADIAL-5MM-10MM" urn="urn:adsk.eagle:package:37412/1" type="box" library_version="1">
+<description>5 mm spaced PTHs in 10 mm diameter silk ring</description>
+<packageinstances>
+<packageinstance name="CPOL-RADIAL-5MM-10MM"/>
 </packageinstances>
 </package3d>
 </packages3d>
@@ -1753,13 +1762,15 @@ design rules under a new name.</description>
 <element name="H2" library="freetronics-original" package="1X08" value="" x="24.13" y="26.67" smashed="yes" rot="R270">
 <attribute name="VALUE" x="20.955" y="27.94" size="1.27" layer="27" rot="R270"/>
 </element>
-<element name="R1" library="resistor" library_urn="urn:adsk.eagle:library:348" package="0207/10" package3d_urn="urn:adsk.eagle:package:25939/1" value="220" x="5.334" y="-6.858"/>
-<element name="R2" library="resistor" library_urn="urn:adsk.eagle:library:348" package="0207/10" package3d_urn="urn:adsk.eagle:package:25939/1" value="220" x="5.334" y="-20.066"/>
-<element name="C1" library="resistor" library_urn="urn:adsk.eagle:library:348" package="C150-091X182" package3d_urn="urn:adsk.eagle:package:26177/1" value="1 mF" x="8.89" y="-34.29"/>
-<element name="JP1" library="pinhead" library_urn="urn:adsk.eagle:library:325" package="1X03" package3d_urn="urn:adsk.eagle:package:22458/2" value="" x="3.81" y="-49.53"/>
-<element name="JP2" library="pinhead" library_urn="urn:adsk.eagle:library:325" package="1X03" package3d_urn="urn:adsk.eagle:package:22458/2" value="" x="3.81" y="-64.77"/>
-<element name="J1" library="SparkFun-Connectors" library_urn="urn:adsk.eagle:library:513" package="SCREWTERMINAL-5MM-2" package3d_urn="urn:adsk.eagle:package:38044/1" value="" x="3.81" y="-82.55">
-<attribute name="SF_SKU" value="PRT-08432" x="3.81" y="-82.55" size="1.778" layer="27" display="off"/>
+<element name="R1" library="resistor" library_urn="urn:adsk.eagle:library:348" package="0207/10" package3d_urn="urn:adsk.eagle:package:25939/1" value="220" x="7.874" y="18.034" rot="R90"/>
+<element name="R2" library="resistor" library_urn="urn:adsk.eagle:library:348" package="0207/10" package3d_urn="urn:adsk.eagle:package:25939/1" value="220" x="20.066" y="18.034" rot="R90"/>
+<element name="LED1" library="pinhead" library_urn="urn:adsk.eagle:library:325" package="1X03" package3d_urn="urn:adsk.eagle:package:22458/2" value="" x="7.874" y="3.048"/>
+<element name="LED2" library="pinhead" library_urn="urn:adsk.eagle:library:325" package="1X03" package3d_urn="urn:adsk.eagle:package:22458/2" value="" x="20.066" y="3.048"/>
+<element name="J1" library="SparkFun-Connectors" library_urn="urn:adsk.eagle:library:513" package="SCREWTERMINAL-5MM-2" package3d_urn="urn:adsk.eagle:package:38044/1" value="" x="11.176" y="28.702">
+<attribute name="SF_SKU" value="PRT-08432" x="11.176" y="28.702" size="1.778" layer="27" display="off"/>
+</element>
+<element name="C1" library="SparkFun-Capacitors" library_urn="urn:adsk.eagle:library:510" package="CPOL-RADIAL-5MM-10MM" package3d_urn="urn:adsk.eagle:package:37412/1" value="1mF" x="13.462" y="10.16" rot="R180">
+<attribute name="PROD_ID" value="CAP-09538" x="13.462" y="10.16" size="1.778" layer="27" rot="R180" display="off"/>
 </element>
 </elements>
 <signals>
@@ -1791,24 +1802,18 @@ design rules under a new name.</description>
 <vertex x="24.13" y="0" curve="90"/>
 </polygon>
 <contactref element="H2" pad="7"/>
-<contactref element="JP1" pad="3"/>
-<contactref element="JP2" pad="3"/>
-<contactref element="C1" pad="2"/>
+<contactref element="LED1" pad="3"/>
+<contactref element="LED2" pad="3"/>
 <contactref element="J1" pad="2"/>
-<wire x1="6.35" y1="-64.77" x2="8.81" y2="-82.55" width="0" layer="19" extent="1-1"/>
-<wire x1="6.35" y1="-49.53" x2="6.35" y2="-64.77" width="0" layer="19" extent="1-1"/>
-<wire x1="16.383" y1="-34.29" x2="6.35" y2="-49.53" width="0" layer="19" extent="1-1"/>
-<wire x1="24.13" y1="11.43" x2="16.383" y2="-34.29" width="0" layer="19" extent="1-1"/>
+<contactref element="C1" pad="-"/>
 </signal>
 <signal name="D1">
 <contactref element="H2" pad="3"/>
-<contactref element="R1" pad="2"/>
-<wire x1="10.414" y1="-6.858" x2="24.13" y2="21.59" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="D2">
 <contactref element="H2" pad="4"/>
 <contactref element="R2" pad="2"/>
-<wire x1="10.414" y1="-20.066" x2="24.13" y2="19.05" width="0" layer="19" extent="1-1"/>
+<wire x1="24.13" y1="19.05" x2="20.066" y2="23.114" width="0.254" layer="1"/>
 </signal>
 <signal name="D5">
 <contactref element="H1" pad="4"/>
@@ -1839,17 +1844,28 @@ design rules under a new name.</description>
 </signal>
 <signal name="TX">
 <contactref element="H2" pad="1"/>
+<contactref element="R1" pad="2"/>
+<wire x1="24.13" y1="26.67" x2="22.098" y2="24.638" width="0.254" layer="1"/>
+<wire x1="22.098" y1="24.638" x2="9.398" y2="24.638" width="0.254" layer="1"/>
+<wire x1="9.398" y1="24.638" x2="7.874" y2="23.114" width="0.254" layer="1"/>
 </signal>
 <signal name="5V">
 <contactref element="H2" pad="8"/>
-<contactref element="JP1" pad="1"/>
-<contactref element="JP2" pad="1"/>
-<contactref element="C1" pad="1"/>
+<contactref element="LED1" pad="1"/>
+<contactref element="LED2" pad="1"/>
 <contactref element="J1" pad="1"/>
-<wire x1="1.27" y1="-64.77" x2="3.81" y2="-82.55" width="0" layer="19" extent="1-1"/>
-<wire x1="1.27" y1="-49.53" x2="1.27" y2="-64.77" width="0" layer="19" extent="1-1"/>
-<wire x1="1.397" y1="-34.29" x2="1.27" y2="-49.53" width="0" layer="19" extent="1-1"/>
-<wire x1="24.13" y1="8.89" x2="1.397" y2="-34.29" width="0" layer="19" extent="1-1"/>
+<contactref element="C1" pad="+"/>
+<wire x1="10.962" y1="10.16" x2="16.276" y2="4.846" width="2.6416" layer="16"/>
+<wire x1="16.276" y1="4.846" x2="17.526" y2="3.596" width="2.6416" layer="16"/>
+<wire x1="17.526" y1="3.596" x2="17.526" y2="3.048" width="2.6416" layer="16"/>
+<via x="-9.866" y="6.898" extent="1-16" drill="0.35"/>
+<wire x1="10.962" y1="10.16" x2="5.334" y2="4.532" width="2.6416" layer="16"/>
+<wire x1="5.334" y1="4.532" x2="5.334" y2="3.048" width="2.6416" layer="16"/>
+<wire x1="24.13" y1="8.89" x2="20.32" y2="8.89" width="0.254" layer="16"/>
+<wire x1="20.32" y1="8.89" x2="16.276" y2="4.846" width="0.254" layer="16"/>
+<wire x1="11.176" y1="28.702" x2="11.176" y2="10.374" width="2.6416" layer="16"/>
+<wire x1="11.176" y1="10.374" x2="10.962" y2="10.16" width="2.6416" layer="16"/>
+<wire x1="24.13" y1="8.89" x2="-9.866" y2="6.898" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="RST">
 <contactref element="H1" pad="1"/>
@@ -1858,14 +1874,14 @@ design rules under a new name.</description>
 <contactref element="H1" pad="8"/>
 </signal>
 <signal name="N$2">
-<contactref element="JP2" pad="2"/>
+<contactref element="LED2" pad="2"/>
 <contactref element="R2" pad="1"/>
-<wire x1="0.254" y1="-20.066" x2="3.81" y2="-64.77" width="0" layer="19" extent="1-1"/>
+<wire x1="20.066" y1="12.954" x2="20.066" y2="3.048" width="0.254" layer="1"/>
 </signal>
 <signal name="N$1">
-<contactref element="JP1" pad="2"/>
+<contactref element="LED1" pad="2"/>
 <contactref element="R1" pad="1"/>
-<wire x1="0.254" y1="-6.858" x2="3.81" y2="-49.53" width="0" layer="19" extent="1-1"/>
+<wire x1="7.874" y1="12.954" x2="7.874" y2="3.048" width="0.254" layer="1"/>
 </signal>
 </signals>
 </board>

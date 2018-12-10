@@ -217,9 +217,6 @@
 <wire x1="22.86" y1="7.62" x2="22.86" y2="27.94" width="0.254" layer="22"/>
 <text x="0.762" y="30.48" size="1.778" layer="21" font="fixed">BEAM</text>
 <text x="1.016" y="29.464" size="0.6096" layer="21" font="fixed">v1.20181201</text>
-<dimension x1="0" y1="31.75" x2="25.4" y2="31.75" x3="12.7" y3="36.068" textsize="1.778" layer="20"/>
-<dimension x1="24.13" y1="0" x2="24.13" y2="33.02" x3="32.004" y3="16.51" textsize="1.778" layer="20"/>
-<dimension x1="25.4" y1="1.27" x2="1.905" y2="1.27" x3="13.6525" y3="-3.556" textsize="1.778" layer="20"/>
 </plain>
 <libraries>
 <library name="freetronics-original">

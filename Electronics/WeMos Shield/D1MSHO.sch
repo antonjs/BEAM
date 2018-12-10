@@ -6436,7 +6436,9 @@ WS2812B</description>
 <part name="J1" library="SparkFun-Connectors" library_urn="urn:adsk.eagle:library:513" deviceset="CONN_02" device="5MM" package3d_urn="urn:adsk.eagle:package:38044/1"/>
 <part name="U$2" library="freetronics-original" deviceset="5V" device=""/>
 <part name="GND2" library="freetronics-original" deviceset="GND" device=""/>
-<part name="C1" library="SparkFun-Capacitors" library_urn="urn:adsk.eagle:library:510" deviceset="1000UF" device="-RADIAL-5MM-25V-20%" package3d_urn="urn:adsk.eagle:package:37412/1" value="1mF"/>
+<part name="C1" library="SparkFun-Capacitors" library_urn="urn:adsk.eagle:library:510" deviceset="1000UF" device="-RADIAL-5MM-25V-20%" package3d_urn="urn:adsk.eagle:package:37412/1" value="1mF">
+<attribute name="SPICEPREFIX" value="C"/>
+</part>
 <part name="U$3" library="freetronics-original" deviceset="5V" device=""/>
 <part name="GND3" library="freetronics-original" deviceset="GND" device=""/>
 <part name="STATUS_LED" library="SparkFun-LED" library_urn="urn:adsk.eagle:library:529" deviceset="WS2812B" device="" package3d_urn="urn:adsk.eagle:package:39369/1" value="WS2812B"/>
