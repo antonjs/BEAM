@@ -1,6 +1,6 @@
 {
   "version": "0.1",
-  "timestamp": 1534323743883,
+  "timestamp": 1544150233442,
   "engine": {
     "id": 1,
     "class": "heronarts.lx.LXEngine",
@@ -39,7 +39,7 @@
     },
     "channels": [
       {
-        "id": 30,
+        "id": 334136,
         "class": "heronarts.lx.LXChannel",
         "modulationColor": -13369600,
         "parameters": {
@@ -65,7 +65,7 @@
         "patternIndex": 4,
         "patterns": [
           {
-            "id": 32,
+            "id": 334148,
             "class": "LXStudio$BlockPattern",
             "modulationColor": -65402,
             "parameters": {
@@ -192,7 +192,7 @@
         ]
       },
       {
-        "id": 37,
+        "id": 334166,
         "class": "heronarts.lx.LXChannel",
         "modulationColor": -65322,
         "parameters": {
@@ -2312,7 +2312,7 @@
         },
         "effects": [],
         "clips": [],
-        "patternIndex": 9,
+        "patternIndex": 8,
         "patterns": [
           {
             "id": 168863,
@@ -2581,10 +2581,57 @@
             "autoCycleEnabled": true
           }
         ]
+      },
+      {
+        "id": 337080,
+        "class": "heronarts.lx.LXChannel",
+        "modulationColor": -65406,
+        "parameters": {
+          "label": "GEQ Mask",
+          "arm": false,
+          "selected": false,
+          "enabled": true,
+          "cue": false,
+          "fader": 1.0,
+          "crossfadeGroup": 2,
+          "blendMode": 1,
+          "midiMonitor": false,
+          "midiChannel": 16,
+          "autoCycleEnabled": false,
+          "autoCycleMode": 0,
+          "autoCycleTimeSecs": 60.0,
+          "transitionEnabled": false,
+          "transitionTimeSecs": 5.0,
+          "transitionBlendMode": 0
+        },
+        "effects": [],
+        "clips": [],
+        "patternIndex": 0,
+        "patterns": [
+          {
+            "id": 347610,
+            "class": "heronarts.lx.pattern.GraphicEqualizerPattern",
+            "modulationColor": -16711757,
+            "parameters": {
+              "label": "GraphicEqualizer",
+              "gain": 0.6700000073760748,
+              "center": 0.46999998949468136,
+              "fade": 0.0,
+              "sharp": 1.0,
+              "plane": 0
+            },
+            "modulation": {
+              "modulators": [],
+              "modulations": [],
+              "triggers": []
+            },
+            "autoCycleEnabled": true
+          }
+        ]
       }
     ],
     "master": {
-      "id": 18,
+      "id": 14,
       "class": "heronarts.lx.LXMasterChannel",
       "modulationColor": -16722689,
       "parameters": {
@@ -2647,7 +2694,7 @@
       }
     },
     "audio": {
-      "id": 20,
+      "id": 16,
       "class": "heronarts.lx.audio.LXAudioEngine",
       "modulationColor": -65498,
       "parameters": {
@@ -2668,19 +2715,19 @@
           "attack": 10.0,
           "release": 100.0,
           "slope": 4.5,
-          "Band-1": 0.11514609507750106,
-          "Band-2": 0.19017067057960624,
-          "Band-3": 0.24646721353434842,
-          "Band-4": 0.30268544178770684,
-          "Band-5": 0.30704487953164306,
-          "Band-6": 0.25313901540809025,
-          "Band-7": 0.23265375279846567,
-          "Band-8": 0.23603329419430263,
-          "Band-9": 0.255584376964222,
-          "Band-10": 0.30392897056366175,
-          "Band-11": 0.2777132583817682,
-          "Band-12": 0.1964213121832875,
-          "Band-13": 0.2517551622491695,
+          "Band-1": 0.08221272841966965,
+          "Band-2": 0.2082402583418851,
+          "Band-3": 0.22668254043409597,
+          "Band-4": 0.24502458476813482,
+          "Band-5": 0.1820159360596817,
+          "Band-6": 0.03541883053500339,
+          "Band-7": 0.0,
+          "Band-8": 0.006662981561613157,
+          "Band-9": 0.11979192582739129,
+          "Band-10": 0.10518080965451249,
+          "Band-11": 0.0,
+          "Band-12": 0.0,
+          "Band-13": 0.0,
           "Band-14": 0.0,
           "Band-15": 0.0,
           "Band-16": 0.0
@@ -2696,7 +2743,7 @@
         }
       },
       "output": {
-        "id": 22,
+        "id": 18,
         "class": "heronarts.lx.audio.LXAudioOutput",
         "modulationColor": -4096,
         "parameters": {
@@ -2745,7 +2792,7 @@
             "phase": 1.0,
             "exp": 1.1175870895385742E-8
           },
-          "basis": 0.43102595797267895
+          "basis": 0.3911619283065306
         },
         {
           "id": 168879,
@@ -2766,7 +2813,7 @@
             "minFreq": 60.0,
             "maxFreq": 120.0,
             "gate": false,
-            "average": 0.4552521515630801,
+            "average": 0.47934493524611854,
             "tap": false
           }
         },
@@ -2791,7 +2838,7 @@
             "phase": 0.0,
             "exp": 0.0
           },
-          "basis": 0.6788782447465849
+          "basis": 0.17389524103831633
         },
         {
           "id": 168888,
@@ -2814,7 +2861,7 @@
             "phase": 0.0,
             "exp": 0.0
           },
-          "basis": 0.33943912237329243
+          "basis": 0.08694762051915816
         },
         {
           "id": 169699,
@@ -2837,7 +2884,7 @@
             "phase": 0.0,
             "exp": 0.0
           },
-          "basis": 0.28909920622583446
+          "basis": 0.5569205505721693
         }
       ],
       "modulations": [
@@ -3211,28 +3258,28 @@
         {
           "channel": 0,
           "type": "CONTROL_CHANGE",
-          "componentId": 32,
+          "componentId": 334148,
           "parameterPath": "fragments",
           "cc": 5
         },
         {
           "channel": 10,
           "type": "NOTE",
-          "componentId": 32,
+          "componentId": 334148,
           "parameterPath": "invert",
           "pitch": 36
         },
         {
           "channel": 10,
           "type": "NOTE",
-          "componentId": 32,
+          "componentId": 334148,
           "parameterPath": "beamSync",
           "pitch": 37
         },
         {
           "channel": 10,
           "type": "NOTE",
-          "componentId": 32,
+          "componentId": 334148,
           "parameterPath": "sideSync",
           "pitch": 38
         },
@@ -3400,21 +3447,21 @@
         {
           "channel": 10,
           "type": "NOTE",
-          "componentId": 37,
+          "componentId": 334166,
           "parameterPath": "fader",
           "pitch": 42
         },
         {
           "channel": 10,
           "type": "NOTE",
-          "componentId": 30,
+          "componentId": 334136,
           "parameterPath": "enabled",
           "pitch": 48
         },
         {
           "channel": 10,
           "type": "NOTE",
-          "componentId": 37,
+          "componentId": 334166,
           "parameterPath": "enabled",
           "pitch": 49
         },
@@ -3474,7 +3521,7 @@
         "centerPoint": false,
         "camera": {
           "active": false,
-          "radius": 1.28413327860402,
+          "radius": 3.3231046765109307,
           "theta": -0.20100000000000046,
           "phi": 0.2310000000000001,
           "x": 0.5,
@@ -3484,7 +3531,7 @@
         "cue": [
           {
             "active": false,
-            "radius": 1.28413327860402,
+            "radius": 3.3231046765109307,
             "theta": -0.20100000000000046,
             "phi": 0.2310000000000001,
             "x": 0.5,

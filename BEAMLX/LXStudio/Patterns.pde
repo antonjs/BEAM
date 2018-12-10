@@ -207,7 +207,7 @@ public static class RainPattern extends LXPattern {
   private final double DROP_RADIUS = 0.1f;
   private final LXVector DIRECTION = new LXVector(0, -1, 0);
   
-  public final CompoundParameter birthrate = new CompoundParameter("Birthrate", 1, 0, 5)
+  public final CompoundParameter birthrate = new CompoundParameter("Birthrate", 1, 0, 10)
     .setDescription("Rate of creation of drops (/ s)");
     
   public final CompoundParameter velocity = new CompoundParameter("Velocity", 0.2f, 0, 1)
@@ -222,6 +222,9 @@ public static class RainPattern extends LXPattern {
   public final BooleanParameter sync = new BooleanParameter("Sync", true)
     .setDescription("Sync beam front and back");
     
+  public final BooleanParameter trigger = new BooleanParameter("Trigger", true)
+    .setDescription("Trigger new drop");
+    
   private final List<Droplet> droplets = new ArrayList<Droplet>();
   private final Random rand = new Random();
   
@@ -233,20 +236,24 @@ public static class RainPattern extends LXPattern {
     addParameter("tailLength", this.tailLength);
     addParameter("forward", this.forward);
     addParameter("sync", this.sync);
+    addParameter("trigger", this.trigger);
+    
+    LXParameterListener listener = new LXParameterListener() {
+      public @Override
+      void onParameterChanged(LXParameter param) {
+        addDroplet();
+      }
+    };
+    
+    this.trigger.addListener(listener);
   }
   
-  public void addDroplet(List<LXPoint> strip) {
-    Droplet drop = new Droplet(lx, strip, tailLength.getValue());
-    droplets.add(drop);
-    addLayer(drop);
-  }
-  
-  public void run(double deltaMs) {
-    if (rand.nextDouble() < birthrate.getValue() * deltaMs / 1000) {
+  public void addDroplet() {
       List<Fixture> beams = ((GridModel3D)lx.model).beams;
       Fixture beam = beams.get(rand.nextInt(beams.size()));
       
       List<List<LXPoint>> strips = new ArrayList<List<LXPoint>>();
+      
       if (sync.isOn()) {
         strips.add(beam.front);
         strips.add(beam.back);
@@ -259,6 +266,17 @@ public static class RainPattern extends LXPattern {
         if (!forward.isOn()) Collections.reverse(stripCopy);
         addDroplet(stripCopy);
       }
+  }
+  
+  public void addDroplet(List<LXPoint> strip) {
+    Droplet drop = new Droplet(lx, strip, tailLength.getValue());
+    droplets.add(drop);
+    addLayer(drop);
+  }
+  
+  public void run(double deltaMs) {
+    if (rand.nextDouble() < birthrate.getValue() * deltaMs / 1000) {
+      addDroplet();
     }
     
     for (Iterator<Droplet> i = droplets.iterator(); i.hasNext(); ) { 
@@ -268,6 +286,10 @@ public static class RainPattern extends LXPattern {
         removeLayer(drop);
         i.remove();
       }
+    }
+    
+    for (int i = 0; i < colors.length; i++) {
+      colors[i] = LXColor.gray(0);
     }
   }
   
@@ -297,6 +319,9 @@ public static class RainPattern extends LXPattern {
         if (distance >= 0 && distance <= tailLength) {    
           double brightness = (tailLength - distance) / tailLength;
           colors[p.index] = LXColor.gray(brightness * 100);
+          addColor(p.index, LXColor.gray(brightness * 100));
+        } else {
+          //colors[p.index] = LXColor.gray(0);
         }
         
         i++;
@@ -581,6 +606,53 @@ public static class BarRandPattern extends LXPattern {
           }
         }
       }
+    }
+  }
+}
+
+public static class BarMaskPattern extends LXPattern {
+  public final List<BooleanParameter> triggers = new ArrayList<BooleanParameter>();
+  
+  public final CompoundParameter speed = new CompoundParameter("Decay", 500, 0, 1000)
+    .setDescription("Fade delay after trigger");
+    
+  private final boolean[] seeds = new boolean[((GridModel3D)lx.model).NUM_BEAMS * 2];
+  private final Random rand = new Random();
+  
+  
+  private int barInt = 0;
+  
+  public BarMaskPattern(LX lx) {
+    super(lx);
+    
+    LXParameterListener listener = new LXParameterListener() {
+      public @Override
+      void onParameterChanged(LXParameter param) {
+      }
+    };
+    
+    for (int i = 0; i < ((GridModel3D)lx.model).NUM_BEAMS; i++) {
+      BooleanParameter trigger = new BooleanParameter(Integer.toString(i), false)
+        .setMode(BooleanParameter.Mode.MOMENTARY)
+        .setDescription("Trigger bar");
+       addParameter("trigger/" + Integer.toString(i), trigger);
+       //trigger.addListener(listener);
+       triggers.add(trigger);
+    }
+  }
+  
+  public void run(double deltaMs) {
+    List<Fixture> beams = ((GridModel3D)lx.model).beams;
+    int beamIndex = 0;
+    
+    for (Fixture beam : beams) {
+      for (List<LXPoint> strip : beam.sides) {
+        for (int i = 0; i < strip.size(); i++) {
+          colors[strip.get(i).index] = LXColor.gray(triggers.get(beamIndex).isOn() ? 100 : 0);
+        }
+      }
+      
+      beamIndex++;
     }
   }
 }
