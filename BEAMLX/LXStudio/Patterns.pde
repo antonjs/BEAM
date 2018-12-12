@@ -656,3 +656,63 @@ public static class BarMaskPattern extends LXPattern {
     }
   }
 }
+
+public static class SinPattern extends LXPattern {  
+  public final CompoundParameter period = new CompoundParameter("Period", 1, 0, 1)
+    .setDescription("Number of periods");
+    
+  public final CompoundParameter position = new CompoundParameter("Position", 1, 0, 1)
+    .setDescription("Position along the beam");
+    
+  public final CompoundParameter width = new CompoundParameter("Width", 1, 1, 10)
+    .setDescription("Width");
+   
+  public SinPattern(LX lx) {
+    super(lx);
+    
+    addParameter("Period", period);
+    addParameter("Position", position);
+    addParameter("Width", width);
+  }
+  
+  public void run(double deltaMs) {
+    List<Fixture> beams = ((GridModel3D)lx.model).beams;
+
+    for (Fixture beam : beams) {
+      for (List<LXPoint> strip : beam.sides) {
+        for (int i = 0; i < strip.size(); i++) {
+          float a = ((float)i / strip.size() * TWO_PI / period.getValuef() + position.getValuef() * TWO_PI) % TWO_PI;
+          float b = pow(sin(a) * 0.5 + 0.5, width.getValuef());
+          
+          colors[strip.get(i).index] = LXColor.gray(b * 100);
+        }
+      }  
+    }
+  }
+}
+
+public static class MirrorEffect extends LXEffect {  
+  public MirrorEffect(LX lx) {
+    super(lx);
+  }
+  
+  public void run(double deltaMs, double amount) {
+    List<Fixture> beams = ((GridModel3D)lx.model).beams;
+
+    for (Fixture beam : beams) {
+      for (List<LXPoint> strip : beam.sides) {
+        int midpoint = strip.size() / 2;
+        
+        for (int i = 0; i < strip.size(); i++) {
+          LXPoint p = strip.get(i);
+          
+          if (i < midpoint) {
+            colors[p.index] = LXColor.add(colors[p.index], colors[strip.get(i+1).index], 0.5);
+          } else {
+            colors[p.index] = colors[strip.get(midpoint - (i - midpoint)).index];
+          }
+        }
+      }  
+    }
+  }
+}

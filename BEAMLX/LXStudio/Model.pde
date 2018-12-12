@@ -14,7 +14,7 @@ public LXModel buildModel() {
 }
 
 public static class GridModel3D extends LXModel { 
-  public static final int NUM_BEAMS = 12;
+  public static final int NUM_BEAMS = 1;
   
   public final List<Fixture> beams;
   
