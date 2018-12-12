@@ -8,6 +8,7 @@ This works with ESP8266 and ESP32 based boards
 #include <ESP8266WiFi.h>        // Include the Wi-Fi library
 #include <ESP8266WiFiMulti.h>   // Include the Wi-Fi-Multi library
 #include <ESP8266mDNS.h>        // Include the mDNS library
+#include <ArduinoOTA.h>
 
 #include "Artnet.h"
 
@@ -18,6 +19,7 @@ This works with ESP8266 and ESP32 based boards
 #include <FastLED.h>
 
 #define DEVICE_NAME "beam01"
+#define DEVICE_UPLOAD_PASSWORD "upload"
 #define BEAM_WIFI_SSID "BEAM"
 #define BEAM_WIFI_PASSWORD "thereisnospoon"
 
@@ -26,15 +28,19 @@ This works with ESP8266 and ESP32 based boards
 #define BACK_DATA_PIN 2
 #define STATUS_DATA_PIN 3
 
-ESP8266WiFiMulti wifiMulti;
+#define DATA_TIMEOUT 10 // seconds
 
-const char* ssid     = "Aperture Science";
-const char* password = "stillalive";
+#define STATE_STARTUP 0
+#define STATE_RUNNING 1
+
+ESP8266WiFiMulti wifiMulti;
 
 Artnet artnet;
 
 CRGB front[NUM_LEDS];
 CRGB back[NUM_LEDS];
+
+unsigned long lastDataMillis = 0;
 
 void setup()
 {
@@ -56,6 +62,10 @@ void setup()
     }
   }
 
+  ArduinoOTA.setHostname(DEVICE_NAME);
+  ArduinoOTA.setPassword((const char *)DEVICE_UPLOAD_PASSWORD);
+  ArduinoOTA.begin();
+
   MDNS.begin(DEVICE_NAME);
 
   FastLED.addLeds<NEOPIXEL, FRONT_DATA_PIN>(front, NUM_LEDS);
@@ -76,13 +86,9 @@ void setup()
 }
 
 void dmxFrame(uint16_t universe, uint16_t length, uint8_t sequence, uint8_t* data, IPAddress remoteIP) {
-//  for (int i = 0; i < length; i += 3) {
-//    leds[i].red = data[i]
-//    leds[i].green = data[i+1]
-//    leds[i].blue = data[i+2]  
-//  }
-
   if (length > 3 * NUM_LEDS) return;
+
+  lastDataMillis = millis();
   
   switch (universe) {
     case 0:
@@ -98,6 +104,11 @@ void dmxFrame(uint16_t universe, uint16_t length, uint8_t sequence, uint8_t* dat
 
 void loop()
 {
-  if (artnet.read() == ART_DMX) {
+  uint16_t artOp = artnet.read();
+  
+  if (!artOp) {
+    if (millis() - lastDataMillis > DATA_TIMEOUT * 1000) {
+      ArduinoOTA.handle();
+    }
   }
 }
