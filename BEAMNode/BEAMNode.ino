@@ -33,17 +33,49 @@ This works with ESP8266 and ESP32 based boards
 #define STATE_STARTUP 0
 #define STATE_RUNNING 1
 
+#define STATUS_OFF CRGB::Red
+#define STATUS_CONNECTING CRGB::Yellow
+#define STATUS_CONNECTED CRGB::Green
+#define STATUS_AP CRGB::Pink
+#define STATUS_GOOD_DATA CRGB::Blue
+#define STATUS_UPDATING CRGB::Purple
+
 ESP8266WiFiMulti wifiMulti;
 
 Artnet artnet;
 
 CRGB front[NUM_LEDS];
 CRGB back[NUM_LEDS];
+CRGB statusLed;
 
 unsigned long lastDataMillis = 0;
 
+void setStatus(CRGB newStatus) {
+  CRGB start = statusLed;
+
+  if (statusLed = newStatus) return;
+  
+  for (int i = 0; i < 255 i += 5) {
+    led = FastLED.blend(start, CRGB::Black, i);
+    FastLED.show();
+    delay(10);
+  }
+
+  for (int i = 0; i < 255; i += 5) {
+    led = FastLED.blend(CRGB::Black, newStatus, i);
+    FastLED.show();
+    delay(10);
+  }
+}
+
 void setup()
 {
+  FastLED.addLeds<NEOPIXEL, FRONT_DATA_PIN>(front, NUM_LEDS);
+  FastLED.addLeds<NEOPIXEL, BACK_DATA_PIN>(back, NUM_LEDS);
+  FastLED.addLeds<NEOPIXEL, STATUS_DATA_PIN>(statusLed, 1);
+  
+  setStatus(STATUS_OFF);
+  
 //  wifiMulti.addAP("DeMaTeriaLX", "lightyourdome");
 //  wifiMulti.addAP("Aperture Science", "stillalive");
 //  wifiMulti.addAP("The Dish", "coronetpeak");
@@ -53,11 +85,16 @@ void setup()
 
   int count = 0;
   while (wifiMulti.run() != WL_CONNECTED) {
-    delay(250);
+    setStatus(STATUS_CONNECTING);
+    delay(100);
+    setStatus(STATUS_OFF);
+    delay(100);
+    
     count++;
 
     if (count > 40) {
       WiFi.softAP(BEAM_WIFI_SSID, BEAM_WIFI_PASSWORD); 
+      setStatus(STATUS_AP);
       break;
     }
   }
@@ -67,9 +104,6 @@ void setup()
   ArduinoOTA.begin();
 
   MDNS.begin(DEVICE_NAME);
-
-  FastLED.addLeds<NEOPIXEL, FRONT_DATA_PIN>(front, NUM_LEDS);
-  FastLED.addLeds<NEOPIXEL, BACK_DATA_PIN>(back, NUM_LEDS);
 
   for (int i = 0; i < 10; i++) {
     front[0] = CRGB::Red;
@@ -89,6 +123,7 @@ void dmxFrame(uint16_t universe, uint16_t length, uint8_t sequence, uint8_t* dat
   if (length > 3 * NUM_LEDS) return;
 
   lastDataMillis = millis();
+  setStatus(STATUS_GOOD_DATA);
   
   switch (universe) {
     case 0:
@@ -108,6 +143,7 @@ void loop()
   
   if (!artOp) {
     if (millis() - lastDataMillis > DATA_TIMEOUT * 1000) {
+      setStatus(STATUS_CONNECTED);
       ArduinoOTA.handle();
     }
   }
